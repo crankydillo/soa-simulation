@@ -24,21 +24,6 @@ object Server {
   implicit val serialization = native.Serialization
   implicit val formats = DefaultFormats + FieldSerializer[System.Messages.Resp]()
 
-  def mkSystem(depth: Int, childrenPerNode: Int): ActorRef = {
-
-    def mkChildren(currDepth: Int): List[ActorRef] = {
-      if (currDepth == depth+1) {
-        Nil
-      } else {
-        (0 to childrenPerNode-1).map { i =>
-          system.actorOf(System.Service.props(s"svc-$i", currDepth, mkChildren(currDepth+1)))
-        }.toList
-      }
-    }
-
-    system.actorOf(System.Service.props("edge", 0, mkChildren(1)))
-  }
-
   def main(args: Array[String]) {
 
     val (port, depth, childrenPerNode) = args.toList match {
@@ -51,11 +36,9 @@ object Server {
     val edge = mkSystem(depth, childrenPerNode)
 
     import System.Messages
-
-    def dur(s: String) = Duration(s).asInstanceOf[FiniteDuration]
-
     import Json4sSupport._
 
+    def dur(s: String) = Duration(s).asInstanceOf[FiniteDuration]
 
     val route = {
       path("hello") {
@@ -83,4 +66,21 @@ object Server {
 
     Await.result(system.whenTerminated, Duration.Inf)
   }
+
+  def mkSystem(depth: Int, childrenPerNode: Int): ActorRef = {
+
+    def mkChildren(currDepth: Int): List[ActorRef] = {
+      if (currDepth == depth+1) {
+        Nil
+      } else {
+        (0 to childrenPerNode-1).map { i =>
+          system.actorOf(System.Service.props(s"svc-$i", currDepth, mkChildren(currDepth+1)))
+        }.toList
+      }
+    }
+
+    system.actorOf(System.Service.props("edge", 0, mkChildren(1)))
+  }
+
+
 }

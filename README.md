@@ -28,14 +28,31 @@ and `l` is the number of layers.
 So in using the command above, there will be 63 calls made to process a
 request.
 
-## Request that triggers non-blocking code
+# Sequential vs parallel affects latency
+
+## Request that triggers parallel code
 
 ```
 time curl localhost:8080/nb/req/1s
 ```
 
-## Request that triggers blocking code
+## Request that triggers sequential code
 
 ```
 time curl localhost:8080/b/req/1s
 ```
+
+# Blocking vs non-blocking affects throughput
+
+For this, you'll have to have SBT in order to run the gatling-powered load
+test.
+
+In SBT's REPL, use:
+
+```
+reStart 8080 5 2
+gatling:test
+```
+
+You exercise the non-blocking code first because the blocking will bring the
+server to its knees.

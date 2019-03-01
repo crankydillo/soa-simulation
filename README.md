@@ -16,8 +16,7 @@ The number of calls is a geometric series: `(1 - c^(l+1))/(1 - c)` where where
 `c` is the number of children per node.   where `c` is the children per node
 and `l` is the number of layers.  
 
-So in using the command above, there will be 63 calls made to process a
-request.
+If you use the command above, there will be 63 calls made to process a request.
 
 # Latency impact of sequential vs parallel
 

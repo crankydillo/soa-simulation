@@ -1,6 +1,6 @@
 # Introduction
 
-Show the harm that seemingly harmless, blocking calls can do in an SOA
+Show the effect that seemingly harmless, blocking calls can do in an SOA
 system.
 
 # Usage

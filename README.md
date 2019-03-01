@@ -5,8 +5,8 @@ do in an SOA system.
 
 # Usage
 
-Start a web service on port 8080 that uses a system with 5 layers.  Each node
-has 2 children.
+Start a web service, listening on port 8080, that uses a 5-layer system.  Each
+node has 2 children.
 
 ```
 PORT=8080; docker run -p $PORT:$PORT crankydillo/soa-simulation $PORT 5 2

@@ -68,19 +68,7 @@ object System {
             if (r.block) blocking(s, r) _
             else nonBlocking(s, r) _
 
-          fn { resps =>
-            /*
-            val title = s"Level $level"
-            val payload = s"""
-            | ${indent(title)}
-            | ${indent("-" * title.size)}
-            | ${indent(resps.mkString(" "))}
-            |""".stripMargin
-            println(payload)
-            s ! payload
-            */
-            s ! NestedResp(level, resps)
-          }
+          fn { resps => s ! NestedResp(level, resps) }
         }
     }
 

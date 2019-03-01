@@ -36,19 +36,13 @@ object System {
       Props(new Service(name, level, children))
   }
 
-  // I should made blocking and non-blocking classes, but what's done is done.
+  // I should have made blocking and non-blocking classes, but what's
+  // done is done.
   class Service(
     name: String,
     val level: Int,
     children: List[ActorRef] = Nil  // want type safe actors? :(:(
   ) extends Actor {
-
-    def indent(s: String) = " " * level + s
-   
-    /**
-     * Process downstream requests synchronously, blocking on each one.
-     */
-    private var block = true
 
     implicit val ec: scala.concurrent.ExecutionContext = context.system.dispatcher
 
@@ -97,5 +91,7 @@ object System {
       }
       p.future
     }
+
+    private def indent(s: String) = " " * level + s
   }
 }

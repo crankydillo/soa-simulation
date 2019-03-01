@@ -12,9 +12,8 @@ node has 2 children.
 PORT=8080; docker run -p $PORT:$PORT crankydillo/soa-simulation $PORT 5 2
 ```
 
-The number of calls is a geometric series: `(1 - c^(l+1))/(1 - c)` where where
-`c` is the number of children per node.   where `c` is the children per node
-and `l` is the number of layers.  
+The number of calls is a geometric series: `(1 - c^(l+1))/(1 - c)` where `c` is
+the number of children per node and `l` is the number of layers.  
 
 If you use the command above, there will be 63 calls made to process a request.
 

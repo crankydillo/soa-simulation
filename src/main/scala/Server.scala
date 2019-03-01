@@ -41,10 +41,10 @@ object Server {
 
   def main(args: Array[String]) {
 
-    val (depth, childrenPerNode) = args.toList match {
-      case d :: cs :: Nil => (d.toInt, cs.toInt)
+    val (port, depth, childrenPerNode) = args.toList match {
+      case p :: d :: cs :: Nil => (p.toInt, d.toInt, cs.toInt)
       case _ =>
-        println("Usage: <depth> <children-per-node>")
+        println("Usage: <port> <depth> <children-per-node>")
         sys.exit(1)
     }
 
@@ -77,9 +77,9 @@ object Server {
       }
     }
 
-    Http().bindAndHandle(route, "localhost", 8080)
+    Http().bindAndHandle(route, "0.0.0.0", port)
 
-    println("Server online at http://localhost:8080/")
+    println(s"Server online at http://localhost:$port/")
 
     Await.result(system.whenTerminated, Duration.Inf)
   }

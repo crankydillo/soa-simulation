@@ -3,15 +3,6 @@
 Show the effect that seemingly harmless, sequential and/or blocking calls can
 do in an SOA system.
 
-As it currently stands, the examples really show the negatives of doing things
-sequentially, when they could be parallelized.  While this could have been done
-2 services, where the edge just makes N calls to the second service, the point
-is to show the effect when people might be tempted do things sequentially since
-they are only doing 'a few things'.  If everyone makes that same reasoning, it
-can have a big impact on a layered system.
-
-I hope to come back to the throughput aspects of non-blocking code.
-
 # Usage
 
 Start a web service on port 8080 that uses a system with 5 layers.  Each node
@@ -28,7 +19,13 @@ and `l` is the number of layers.
 So in using the command above, there will be 63 calls made to process a
 request.
 
-# Sequential vs parallel affects latency
+# Latency impact of sequential vs parallel
+
+While this could have been done 2 services, where the edge just makes N calls
+to the second service, the point is to show the effect when people might be
+tempted do things sequentially since they are only doing 'a few things'.  If
+everyone makes that same reasoning, it can have a big impact on the latency of
+a layered system.
 
 ## Request that triggers parallel code
 
@@ -42,7 +39,7 @@ time curl localhost:8080/nb/req/1s
 time curl localhost:8080/b/req/1s
 ```
 
-# Blocking vs non-blocking affects throughput
+# Throughput impact of blocking vs non-blocking
 
 For this, you'll have to have SBT in order to run the gatling-powered load
 test.
